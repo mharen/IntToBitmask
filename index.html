@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset=utf-8 />
+    <title>Int to bitmask/bitflag/binary</title>
+    <style>
+        header {
+            font-size: small;
+            color: #555;
+        }
+        section{
+            font-size: large;
+            margin-top: 20px;
+        }
+        input,span { 
+            font-size: 100%;
+            font-family: Consolas, Courier New, monospace;
+        }
+        input {
+            border: none;
+            outline: none;
+            border-bottom: 1px solid #999;
+        }
+        span {
+            border-bottom: 1px dotted #999;
+        }
+        footer {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        This tool converts an integer to its binary representation. This is sometimes helpful when working out what bitflags or bitmasks are meant by a random number.
+    </header>
+    <section>
+        <label for="dec">The decimal integer</label>
+        <input id="dec" value="0" /> 
+        is <span id="bin"></span> in binary.
+    </section>
+    <footer>
+        <a href="http://twitter.com/mharen">@mharen</a> |
+        <a href="http://upboat.me">upboat.me</a> |
+        <a href="https://github.com/worldwidewat/IntToBitmask">source</a>
+    </footer>
+    <script>
+        var doWork = function(){
+            var int = parseInt(this.value || 0, 10);
+            var bin = document.getElementById('bin');
+            bin.innerHTML = int.toString(2);
+        };    
+        
+        // bind to the first supported event (listed in order of preference)
+        var possibleEvents = ["oninput", "onpropertychange", "onkeyup", "onchange"];
+        
+        window.onload = function () {
+            var dec = document.getElementById('dec');
+            doWork.call(dec);
+        
+            // for/each is deprecated, but alternatives like array.foreach isn't _widely_ supported yet :/
+            for (var i = 0; i < possibleEvents.length; ++i) {
+                var eventName = possibleEvents[i];
+                if (eventName in dec) {
+                    dec[eventName] = doWork;
+                    break;
+                }
+            }
+        
+            // hack for IE, which doesn't fire the preferred events on backspace/delete
+            if (navigator.appName == 'Microsoft Internet Explorer') {
+                dec.onkeyup = function (e) {
+                    if (e.keyCode == 8 || e.keyCode == 46) {
+                        doWork.call(this);
+                    }
+                };
+            }
+        };
+    </script>
+</body>
+</html>
