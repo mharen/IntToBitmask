@@ -1,3 +1,1 @@
-This site is available at http://inttobitmask.com
-
-More to come...
+This site is available at https://inttobitmask.azurewebsites.net
