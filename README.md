@@ -1,1 +1,1 @@
-This site is available at https://inttobitmask.azurewebsites.net
+This site is available at https://inttobitmask.wassupy.com
